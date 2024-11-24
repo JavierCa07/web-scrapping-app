@@ -1,20 +1,17 @@
-import { AppBar, Box, Button, TextField, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box } from '@mui/material';
+import { SearchField } from '../../components/search-field/search-field.component';
+import { AppToolbar } from '../../components/app-toolbar/app-toolbar.components';
 
 export const Search = () => {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', background: "#111111" }}>
             <AppBar position="static">
-                <Toolbar sx={{ display: 'flex' }}>
-                    <Typography variant="h6" noWrap component="div">Web Scrapping App</Typography>
-                </Toolbar>
+                <AppToolbar />
             </AppBar>
-            <Box sx={{ flex: '1' }}>
-                <TextField id="outlined-basic" label="Search" variant="outlined" />
-                <Button variant="contained">Search</Button>
+            <Box sx={{ display: 'flex', flex: '1', justifyContent: 'center', alignItems: 'center' }}>
+                <SearchField />
             </Box>
         </Box>
     )
 };
 
-// TODO: componetizar search + button (sacar a otro fichero e importarlo aqui)
-// añadir estilos para centrar y poner bonito el buscador
