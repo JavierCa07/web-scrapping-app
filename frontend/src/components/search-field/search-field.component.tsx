@@ -1,7 +1,7 @@
 import { Box, Button } from "@mui/material"
 import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
 
-export const SearchField = () => {
+export const SearchField = ({ onSearchClick }) => {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '600px' }}>
             <BaseTextareaAutosize
@@ -11,7 +11,8 @@ export const SearchField = () => {
                 placeholder="Enter your query"
                 defaultValue=""
             />
-            <Button sx={{ borderRadius: 0, height: '56px' }} variant="contained" >Search</Button>
+            {/* TODO: pass text content to the function */}
+            <Button sx={{ borderRadius: 0, height: '56px' }} variant="contained" onClick={onSearchClick} >Search</Button>
         </Box>
     )
 }
