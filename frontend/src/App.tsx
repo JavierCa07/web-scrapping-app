@@ -2,8 +2,17 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import { Search } from './pages/search/search.component';
 import { onSearchAction } from './actions/search.api';
+import { useState } from 'react';
 
 export default function App() {
-  return <Search onSearchClick={onSearchAction} />
+  const [results, setResults] = useState() as any; // TODO: remove this any
+
+  const searchAction = () => {
+    onSearchAction()
+    .then((response) => {
+      setResults(response);
+    })
+  }
+  return <Search onSearchClick={searchAction} results={results} />
 }
 
