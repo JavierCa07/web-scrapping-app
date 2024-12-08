@@ -1,16 +1,21 @@
 const express = require('express')
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const app = express()
 const port = 5000
 
-// app.use(require('body-parser').urlencoded({ extended: true }));
-app.use(require('body-parser').json());
+// TODO: we are returning mock data as of now
+// replace mock data with real data from web scrapping
+import mockData from './db.json';
 
+app.use(bodyParser.json());
 
-app.get('/search', (req, res) => {
-const response = {
-    foo: "bar"
-};
-  res.json(response)
+app.use(cors({ origin: 'http://localhost:3000'}));
+
+app.post('/search', (req, res) => {
+  const { body } = req;
+  // TODO: here call method to process query
+  res.json(mockData);
 })
 
 app.listen(port, () => {

@@ -7,8 +7,8 @@ import { useState } from 'react';
 export default function App() {
   const [results, setResults] = useState() as any; // TODO: remove this any
 
-  const searchAction = () => {
-    onSearchAction()
+  const searchAction = (query: string) => {
+    onSearchAction(query)
     .then((response) => {
       setResults(response);
     })
