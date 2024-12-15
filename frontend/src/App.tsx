@@ -1,5 +1,3 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
 import { Search } from './pages/search/search.component';
 import { onSearchAction } from './actions/search.api';
 import { useState } from 'react';
@@ -9,8 +7,8 @@ export default function App() {
 
   const searchAction = (query: string) => {
     onSearchAction(query)
-    .then((response) => {
-      setResults(response);
+    .then((response: any) => { // TODO: remove this any
+      setResults(response.results);
     })
   }
   return <Search onSearchClick={searchAction} results={results} />
