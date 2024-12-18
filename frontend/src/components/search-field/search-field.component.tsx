@@ -2,12 +2,13 @@ import { Box, Button, TextField } from "@mui/material"
 import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
 import { useState } from "react";
 
-export const SearchField = ({ onSearchClick, isResults }) => {
+export const SearchField = ({ onSearchClick, isResults }) => { // TODO: may use isResults (rename to isLoading) to render loading spinner or skeleton
     const [queryText, setQueryText] = useState<string>();
-    const [isFocused, setIsFocused] = useState(false);
+    const [searchExpanded, setSearchExpanded] = useState(true);
 
     const handleClick = () => {
         if (queryText) {
+            setSearchExpanded(false);
             onSearchClick(queryText);
         }
     }
@@ -17,13 +18,9 @@ export const SearchField = ({ onSearchClick, isResults }) => {
     }
 
     const handleFocus = () => {
-      setIsFocused(true);
+        setSearchExpanded(true);
     }
-
-    const handleBlur = () => {
-        setIsFocused(false);
-      }
-
+    
     const renderExpandedSearch = () => (
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '600px', position: 'sticky', top: '74px', marginBottom: "10px" }}>
             <BaseTextareaAutosize
@@ -34,7 +31,6 @@ export const SearchField = ({ onSearchClick, isResults }) => {
             defaultValue={queryText}
             onChange={(ev) => handleChange(ev.target.value)}
             onFocus={handleFocus}
-            onBlur={handleBlur}
             style={{ padding: "10px" }}
         />
             <Button sx={{ borderRadius: 0, height: '56px' }} variant="contained" onClick={handleClick} disabled={!queryText} >Search</Button> 
@@ -51,10 +47,9 @@ export const SearchField = ({ onSearchClick, isResults }) => {
             defaultValue={queryText}
             onChange={(ev) => handleChange(ev.target.value)}
             onFocus={handleFocus}
-            onBlur={handleBlur}
             />
         </Box>
     )
 
-    return !isFocused && isResults ? renderCollapsedSearch() : renderExpandedSearch()
+    return searchExpanded ? renderExpandedSearch() : renderCollapsedSearch();
 }

@@ -13,7 +13,8 @@ app.use(bodyParser.json());
 app.use(cors({ origin: 'http://localhost:3000'}));
 
 app.post('/search', (req, res) => {
-  const { body } = req;
+  const { body: { query } } = req;
+  console.log("query", query)
   // TODO: here call method to process query
   res.json(mockData);
 })
