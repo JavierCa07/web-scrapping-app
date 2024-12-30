@@ -5,13 +5,14 @@
   "scripts": {
     "watch": "tsc --watch",
     "backend": "node --watch build/index.js",
-    "dev:backend": "concurrently \"npm run watch\" \"npm run backend\"",
+    "dev:backend": "npm run copy-python-scripts && concurrently \"npm run watch\" \"npm run backend\"",
     "dev:frontend": "npm start --prefix ./frontend",
     "check-types": "tsc",
     "prettier": "prettier --write .",
-    "build:backend": "tsc",
+    "build:backend": "tsc && npm run copy-python-scripts",
     "build:frontend": "npm run build --prefix ./frontend",
-    "build": "tsc && npm run build:frontend"
+    "build": "tsc && npm run build:frontend",
+    "copy-python-scripts": "cpx ./backend/src/python-scrapping/python-script.py ./build/python-scrapping/"
   },
   "repository": "https://github.com/apicgg/vite-mern-template.git",
   "license": "MIT",
@@ -31,6 +32,7 @@
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "concurrently": "^8.2.2",
+    "cpx": "^1.5.0",
     "eslint": "^8.57.0",
     "prettier": "3.2.5",
     "typescript": "^5.5.4"

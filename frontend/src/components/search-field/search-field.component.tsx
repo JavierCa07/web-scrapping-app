@@ -26,6 +26,7 @@ export const SearchField = ({ onSearchClick, isResults }) => { // TODO: may use 
             <BaseTextareaAutosize
             minRows={10}
             maxRows={30}
+            maxLength={500}
             aria-label="Search"
             placeholder="Enter your query"
             defaultValue={queryText}

@@ -1,22 +1,27 @@
 const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { spawnSync } = require('child_process');
+
 const app = express()
 const port = 5000
 
-// TODO: we are returning mock data as of now
-// replace mock data with real data from web scrapping
-import mockData from './db.json';
+import path from 'path';
 
 app.use(bodyParser.json());
 
 app.use(cors({ origin: 'http://localhost:3000'}));
 
-app.post('/search', (req, res) => {
+// TODO: what if a new request is received while the previous one is still running?
+app.post('/search', async (req, res) => {
   const { body: { query } } = req;
-  console.log("query", query)
-  // TODO: here call method to process query
-  res.json(mockData);
+  // our python script is called
+  const scriptPath = path.join(__dirname, './python-scrapping/python-script.py');
+  const pythonProcess = await spawnSync('python3', [
+    scriptPath, query
+  ], { timeout: 5000 });
+
+  res.send(pythonProcess.stdout?.toString());
 })
 
 app.listen(port, () => {
