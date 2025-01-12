@@ -19,9 +19,10 @@ app.post('/search', async (req, res) => {
   const scriptPath = path.join(__dirname, './python-scrapping/python-script.py');
   const pythonProcess = await spawnSync('python3', [
     scriptPath, query
-  ], { timeout: 5000 });
+  ], { timeout: 60000, maxBuffer: 1024 * 1024 * 10 });
 
-  res.send(pythonProcess.stdout?.toString());
+  // console.log(pythonProcess.stderr?.toString());
+  res.send(pythonProcess.stderr?.toString());
 })
 
 app.listen(port, () => {

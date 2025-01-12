@@ -26,7 +26,7 @@ export const ResultList = ({ results }) => {
     const getHeightByResultIndex = (index: number) => expandedResultIndexes.includes(index) ? "auto" : "120px";
 
     return results.map((result, i) => {
-      return <Box sx={{ display: "flex", border: "1px solid black", width: "clamp(600px, 50%, 800px)", margin: "10px", height: getHeightByResultIndex(i), overflowY: "hidden"}}>
+      return <Box key={i} sx={{ display: "flex", border: "1px solid black", width: "clamp(600px, 50%, 800px)", margin: "10px", height: getHeightByResultIndex(i), overflowY: "hidden"}}>
         <Box sx={{ flex: 1, color: "black", display: "flex", justifyContent: "center", alignItems: "center", cursor: "pointer", fontSize: "2rem" }} onClick={() => handleExpandClick(i)}>
           +
         </Box>
