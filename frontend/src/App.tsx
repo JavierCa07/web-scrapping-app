@@ -5,7 +5,9 @@ import { useState } from 'react';
 export default function App() {
   const [results, setResults] = useState() as any; // TODO: remove this any
 
-  // TODO: add loading state while searching
+  const resetResults = () => {
+    setResults(null);
+  }
 
   const searchAction = (query: string) => {
     onSearchAction(query)
@@ -13,6 +15,6 @@ export default function App() {
       setResults(response);
     })
   }
-  return <Search onSearchClick={searchAction} results={results} />
+  return <Search onSearchClick={searchAction} results={results} resetResults={resetResults} />;
 }
 

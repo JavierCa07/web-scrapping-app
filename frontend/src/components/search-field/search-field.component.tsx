@@ -1,14 +1,26 @@
 import { Box, Button, TextField } from "@mui/material"
 import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const SearchField = ({ onSearchClick, isResults }) => { // TODO: may use isResults (rename to isLoading) to render loading spinner or skeleton
+export const SearchField = ({ onSearchClick, isResults, noResultsFound, resetResults }) => {
     const [queryText, setQueryText] = useState<string>();
     const [searchExpanded, setSearchExpanded] = useState(true);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        if (isResults) {
+            setSearchExpanded(false);
+            setLoading(false);
+        }
+        if (noResultsFound) {
+            setLoading(false);
+        }
+    }, [isResults, noResultsFound]);
 
     const handleClick = () => {
         if (queryText) {
-            setSearchExpanded(false);
+            setLoading(true);
+            resetResults();
             onSearchClick(queryText);
         }
     }
@@ -34,7 +46,7 @@ export const SearchField = ({ onSearchClick, isResults }) => { // TODO: may use 
             onFocus={handleFocus}
             style={{ padding: "10px" }}
         />
-            <Button sx={{ borderRadius: 0, height: '56px' }} variant="contained" onClick={handleClick} disabled={!queryText} >Search</Button> 
+            <Button sx={{ borderRadius: 0, height: '56px' }} variant="contained" onClick={handleClick} disabled={!queryText} loading={loading}>Search</Button> 
         </Box>
     )
 

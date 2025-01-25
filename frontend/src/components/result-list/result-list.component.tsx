@@ -17,8 +17,7 @@ export const ResultList = ({ results }) => {
 
     const [expandedResultIndexes, setExanpedResultIndexes] = useState([]);
   
-    // TODO: add support for collapsing results
-    // also if posible show only the + button for overflowed texts
+  
     const handleExpandClick = (index: number) => {
       setExanpedResultIndexes(expandedResultIndexes.concat(index));
     }
@@ -32,7 +31,7 @@ export const ResultList = ({ results }) => {
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", flex: 16 }}>
           <Box sx={{ flex: 1, background: "deepskyblue" }}>
-            <a href={result.source} target="_blank">{result.source}</a>
+            <a href={result.source} target="_blank" rel="noopener noreferrer">{result.source}</a>
           </Box>
           <Box sx={{ flex: 10 }}>
           {result.text}
