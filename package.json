@@ -12,7 +12,7 @@
     "build:backend": "tsc && npm run copy-python-scripts",
     "build:frontend": "npm run build --prefix ./frontend",
     "build": "tsc && npm run build:frontend",
-    "copy-python-scripts": "cpx ./backend/src/python-scrapping/python-script.py ./build/python-scrapping/"
+    "copy-python-scripts": "cpx ./backend/src/python-scrapping/*.py ./build/python-scrapping/"
   },
   "repository": "https://github.com/apicgg/vite-mern-template.git",
   "license": "MIT",

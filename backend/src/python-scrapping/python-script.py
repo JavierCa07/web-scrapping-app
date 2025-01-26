@@ -5,43 +5,21 @@ import re
 import json
 import os
 import shutil
+import uuid
 
 original_query = sys.argv[1]
-result_folder = os.path.join(os.getcwd(), 'build', 'python-scrapping', 'results') 
+unique_folder_name = str(uuid.uuid4())
+result_folder = os.path.join(os.getcwd(), 'build', 'python-scrapping', 'results', unique_folder_name) 
 # result_folder = os.path.join('.', 'results') # use this line to execute this script directly
 
-stop_words = [
-    'the',
-    'and',
-    'in',
-    'at',
-    'to',
-    'of',
-    'a',
-    'an',
-    'on',
-    'for',
-    'with',
-    'by',
-    'that',
-    'which',
-    'or',
-    'as',
-    'but'
-    'if',
-    '.'
-]
-
-def split_text_by_words(text, words):
-    # Create a regex pattern that matches any of the words
-    pattern = r'\b(?:' + '|'.join(map(re.escape, words)) + r')\b'
-    # Split the text using the pattern
-    return re.split(pattern, text) 
+def split_text_by_chunks(text):
+    # Split the text using . or , as separators
+    return re.split(r'[.,]', text) 
 
 def process_query(query):
     # print("python->query", query)
     # split query using any of the stop_words
-    splitted_query = split_text_by_words(query, stop_words)
+    splitted_query = split_text_by_chunks(query)
     sanitized_query = []
     for chunk in splitted_query:
         if len(chunk.split()) <= 1:
@@ -59,7 +37,7 @@ def get_files_in_folder(folder_path):
 
 def clean_json_files(folder_path):
     # remove folder and its files
-    if os.path.exists(result_folder):
+    if os.path.exists(folder_path):
         shutil.rmtree(folder_path)
     return
 
@@ -92,7 +70,7 @@ def process_results():
                 if line['abstract'] is not None and line['abstract'].find(chunk) != -1:
                     match_count += 1
             if match_count > 0:
-                source = "https://doi.org/" + line['doi'] if line['doi'] is not None else ""
+                source = "https://doi.org/" + line['doi'].split()[0] if line['doi'] is not None else ""
                 scores += [{
                     'text': line['abstract'],
                     'source': source,
@@ -113,11 +91,11 @@ def search_pubmed(query):
     # and doing multiple queries so we can match titles
     # then do search using abstracts
     # this function is not returning anything because the final product is a list of jsonl files in /results
+    create_result_folder()
     count = 0
     for chunk in query:   
         print('querying for: ', chunk)
-        create_result_folder()
-        get_and_dump_pubmed_papers([chunk.strip()], os.path.join(os.getcwd(), 'build', 'python-scrapping', 'results', 'results' + str(count) + '.jsonl'), ["title", "date", "abstract", "doi"], "2020-01-01")
+        get_and_dump_pubmed_papers([chunk.strip()], os.path.join(os.getcwd(), 'build', 'python-scrapping', 'results', unique_folder_name, 'results' + str(count) + '.jsonl'), ["title", "date", "abstract", "doi"], "2019-01-01")
         # an alternative is to use the get_pubmed_papers function, but it returns a panda dataframe...
         # get_pubmed_papers([chunk.strip()], ["title", "date", "abstract"], 10)
         count += 1
@@ -138,23 +116,23 @@ clean_json_files(result_folder)
 # !!!!!! SOLVE THE ISSUE WITH THE PYTHON VERSION AND PAPERSCRAPER
 # when you install a python package, it is installed in the python version of the system
 
-# cut source link space so it won't take up more than 1 line
-# Add short description in the UI about what the app does.
-# improve UI (make it look better)
 # exact match checkbox in the UI
+# Hightlight the matching chunks in the abstract (in the result list)
+
+# give status feedback (using polling, Server-sent events, websockets...)
 # optimize serching time
     # reduce number of chunks
     # implement some type of cache
 # make simple adding or removing new data sources
-# give status feedback (easy: using polling, hard: using websockets)
-# Hightlight the matching chunks in the abstract (in the result list)
 # When clicking on the source, highlight the text in the source
 # Assess the performance of NodeJS in this use case, and how its single-threaded architecture might impact the performance
 # implementing fuzzy-logic (with N-gram) for searching for similar text
 # add support for collapsing results (in the UI)
+# as of now we are searching paper abstracts, but we could also search the whole paper
 
 # TODO: example queries, to be removed
 # query = 'The body mass index was first described almost 200 years ago' # fast
 # query2 = 'low-grade chronic inflammation' # not so fast
 # query3 = 'Overweight and obesity (OWO) are linked to dyslipidemia and low-grade chronic inflammation' # gives a mix of 100% and 50% results
 # query4 = 'Severe obesity is associated with a low-grade chronic inflammation, and high-sensitivity C-reactive protein (hs-CRP) is a marker that can be used to evaluate chronic inflammation status. Metabolic bariatric surgery (MBS) is shown to decrease hs-CRP level, but long-term results are scarce, and association with weight loss outcomes is undetermined.' # slow
+# query5 = 'Most cases of COVID-19 infection were second-generation human-to-human transmissions from Wuhan and were mild in severity. The clinical characteristics of COVID-19 varied. Oxyhemoglobin saturation, oxygenation index, CRP and SAA levels, and CT features were reliable parameters to evaluate the severity of COVID-19 infection. However, a few patients with mild COVID-19 disease lacked typical characteristics such as fever and changes in CT imaging features.' # takes 3-4 minutes
