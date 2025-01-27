@@ -1,24 +1,16 @@
-const stopWords = [
-    ',',
-    '.'
-];
-
 const estimationStrings = [
     "It can take a few seconds...",
     "It can take some minutes...",
     "It can take a long time..."
 ];
 
-const splitStringByWords = (str, words) => {
-    const escapedWords = words.map(word => word.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'));
-    const pattern = new RegExp(`\\b(${escapedWords.join('|')})\\b`, 'gi');
-    
-    return str.split(pattern).filter(part => part.trim() !== '').filter(chunk => chunk.trim().split(" ").length > 1);
+const splitStringByWords = (str: string) => {
+    return str.split(/[,.]/).filter(part => part.trim() !== '').filter(chunk => chunk.trim().split(" ").length > 1);
   }
 
 export const getTimeEstimationString = (query: string) => {
     const TIME_PER_CHUNK_IN_SECONDS = 20; // aproximation
-    const numberOfChunks = splitStringByWords(query, stopWords).length;
+    const numberOfChunks = splitStringByWords(query).length;
     const time = numberOfChunks * TIME_PER_CHUNK_IN_SECONDS;
     if (time === 20) {
         return "";

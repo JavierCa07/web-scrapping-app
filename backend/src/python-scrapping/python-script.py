@@ -110,29 +110,3 @@ print(json.dumps(process_results()), file=sys.stderr)
 
 # remove jsonl after every search
 clean_json_files(result_folder)
-
-
-# ! TODO (improvements):
-# !!!!!! SOLVE THE ISSUE WITH THE PYTHON VERSION AND PAPERSCRAPER
-# when you install a python package, it is installed in the python version of the system
-
-# exact match checkbox in the UI
-# Hightlight the matching chunks in the abstract (in the result list)
-
-# give status feedback (using polling, Server-sent events, websockets...)
-# optimize serching time
-    # reduce number of chunks
-    # implement some type of cache
-# make simple adding or removing new data sources
-# When clicking on the source, highlight the text in the source
-# Assess the performance of NodeJS in this use case, and how its single-threaded architecture might impact the performance
-# implementing fuzzy-logic (with N-gram) for searching for similar text
-# add support for collapsing results (in the UI)
-# as of now we are searching paper abstracts, but we could also search the whole paper
-
-# TODO: example queries, to be removed
-# query = 'The body mass index was first described almost 200 years ago' # fast
-# query2 = 'low-grade chronic inflammation' # not so fast
-# query3 = 'Overweight and obesity (OWO) are linked to dyslipidemia and low-grade chronic inflammation' # gives a mix of 100% and 50% results
-# query4 = 'Severe obesity is associated with a low-grade chronic inflammation, and high-sensitivity C-reactive protein (hs-CRP) is a marker that can be used to evaluate chronic inflammation status. Metabolic bariatric surgery (MBS) is shown to decrease hs-CRP level, but long-term results are scarce, and association with weight loss outcomes is undetermined.' # slow
-# query5 = 'Most cases of COVID-19 infection were second-generation human-to-human transmissions from Wuhan and were mild in severity. The clinical characteristics of COVID-19 varied. Oxyhemoglobin saturation, oxygenation index, CRP and SAA levels, and CT features were reliable parameters to evaluate the severity of COVID-19 infection. However, a few patients with mild COVID-19 disease lacked typical characteristics such as fever and changes in CT imaging features.' # takes 3-4 minutes
