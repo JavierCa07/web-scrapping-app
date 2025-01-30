@@ -51,6 +51,7 @@ Just install the missing package `setuptools`:
 
 # Future improvements
 
+- detect and process duplicated results (compact them into one)
 - give status feedback (using polling, Server-sent events, websockets...)
 - optimize serching time (implement some type of cache, avoid creating result files by downloading the dumps once).
 - make simple adding or removing new data sources
@@ -62,11 +63,12 @@ Just install the missing package `setuptools`:
 - have a historic of searches (no need for a DB, as it can be stored in the browser)
 - exact match checkbox in the UI
 - Hightlight the matching chunks in the abstract (in the result list)
+- Use stdout instead of stderr for the python script output (otherwise we are potentially leaking sensitive information to the client)
 
 
 # Example queries
 - `The body mass index was first described almost 200 years ago` -> fast
 - `low-grade chronic inflammation` -> not so fast
-- `Overweight and obesity (OWO) are linked to dyslipidemia and low-grade chronic inflammation` -> gives a mix of 100% and 50% results
+- `Analysis of clinical, laboratory and instrumental parameters in comorbid patients with severe COVID-19.`
 - `Severe obesity is associated with a low-grade chronic inflammation, and high-sensitivity C-reactive protein (hs-CRP) is a marker that can be used to evaluate chronic inflammation status. Metabolic bariatric surgery (MBS) is shown to decrease hs-CRP level, but long-term results are scarce, and association with weight loss outcomes is undetermined.` -> slow
 - `Most cases of COVID-19 infection were second-generation human-to-human transmissions from Wuhan and were mild in severity. The clinical characteristics of COVID-19 varied. Oxyhemoglobin saturation, oxygenation index, CRP and SAA levels, and CT features were reliable parameters to evaluate the severity of COVID-19 infection. However, a few patients with mild COVID-19 disease lacked typical characteristics such as fever and changes in CT imaging features.` -> takes 3-4 minutes

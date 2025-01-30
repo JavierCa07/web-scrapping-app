@@ -5,10 +5,12 @@ import { ResultList } from '../../components/result-list/result-list.component';
 import { AppDescription } from '../../components/app-description/app-description';
 
 export const Search = ({ onSearchClick, results, resetResults, timeEstimation }) => {
-    const isResults = results?.length > 0;
-    const noResultsFound = Array.isArray(results) && results.length === 0;
+    const isResults = results?.length > 0; // do we have results?
+    const noResultsFound = Array.isArray(results) && results.length === 0; // is the array empty?
+    // Box: is a container component that layouts its children component in the screen
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+            {/* AppBar: is the top bar of the application */}
             <AppBar position="sticky" sx={{ background: '#222222'}}>
                 <AppToolbar />
             </AppBar>
