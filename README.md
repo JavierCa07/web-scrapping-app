@@ -1,5 +1,5 @@
 # Web Scrapping App
-This web based project has the aim to be abel to help students when making their essay.
+This web based project has the aim to be able to help students when making their essay.
 For example if you are doing your essay and you have a quote which you do not know where it is from then the idea is that you input the quote into the search bar and the web site will inform you on where that quote is from i.e from which website it is. This will facilitate the citation process and will help stuednt acheive a higher mark on their essay.
 
 # Running the App

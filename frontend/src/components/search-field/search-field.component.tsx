@@ -42,7 +42,7 @@ export const SearchField = ({ onSearchClick, isResults, noResultsFound, resetRes
             aria-label="Search"
             placeholder="Enter your query"
             defaultValue={queryText}
-            onChange={(ev) => handleChange(ev.target.value)}
+            onChange={(ev) => handleChange(ev.target.value)} 
             onFocus={handleFocus}
             style={{ padding: "10px" }}
         />
