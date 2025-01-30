@@ -95,9 +95,10 @@ def search_pubmed(query):
     count = 0
     for chunk in query:   
         print('querying for: ', chunk)
+        # Here we do the actual web scrapping on pubmed website
+        # We do a request for every sub-query
+        # The result of the web scrapping is a list os jsonl files stored in a subfolder of /results using a unique name (uuid)
         get_and_dump_pubmed_papers([chunk.strip()], os.path.join(os.getcwd(), 'build', 'python-scrapping', 'results', unique_folder_name, 'results' + str(count) + '.jsonl'), ["title", "date", "abstract", "doi"], "2019-01-01")
-        # an alternative is to use the get_pubmed_papers function, but it returns a panda dataframe...
-        # get_pubmed_papers([chunk.strip()], ["title", "date", "abstract"], 10)
         count += 1
 
 # search_pubmed(final_query)
